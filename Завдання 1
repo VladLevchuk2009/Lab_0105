@@ -1,0 +1,86 @@
+using System;
+
+public interface IShape
+{
+    double Size { get; set; }
+    void displayType();
+    void displayArea();
+}
+
+public interface IColoredShape : IShape
+{
+    string Color { get; set; }
+    void displayColor();
+}
+
+public class Circle : IShape
+{
+    public double Size { get; set; }
+
+    public Circle(double radius)
+    {
+        this.Size = radius;
+    }
+    public void displayType()
+    {
+        Console.WriteLine("Circle");
+    }
+    public void displayArea()
+    {
+        Console.WriteLine(Math.PI * Size * Size);
+    }
+}
+
+public class ColoredCircle : IColoredShape
+{
+    public double Size { get; set; }
+    public string Color { get; set; }
+
+    public ColoredCircle(double Size, string Color)
+    {
+        this.Size = Size;
+        this.Color = Color;
+    }
+
+    public void displayType()
+    {
+        Console.WriteLine("Colored Circle");
+    }
+
+    public void displayArea()
+    {
+        Console.WriteLine($"{Math.PI * Size * Size}");
+    }
+
+    public void displayColor()
+    {
+        Console.WriteLine($"{Color}");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Circle circle1 = new Circle(1);
+        Circle circle2 = new Circle(2);
+        Circle circle3 = new Circle(3);
+
+        ColoredCircle coloredCircle1 = new ColoredCircle(1, "Red");
+        ColoredCircle coloredCircle2 = new ColoredCircle(2, "Blue");
+        ColoredCircle coloredCircle3 = new ColoredCircle(3, "Green");
+
+        IShape[] shapes = new IShape[] { circle1, circle2, circle3, coloredCircle1, coloredCircle2, coloredCircle3 };
+
+        foreach (IShape shape in shapes)
+        {
+            shape.displayType();
+            shape.displayArea();
+
+            if (shape is IColoredShape coloredShape)
+                coloredShape.displayColor();
+
+            Console.WriteLine();
+        }
+    }
+}
