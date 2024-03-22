@@ -1,0 +1,82 @@
+using System;
+
+public interface Printable
+{
+    void print();
+}
+
+public class Book : Printable
+{
+    private string title;
+
+    public Book(string title)
+    {
+        this.title = title;
+    }
+    public void print()
+    {
+        Console.WriteLine(title);
+    }
+    public static void printBooks(Printable[] printable)
+    {
+        foreach (Printable item in printable)
+        {
+            if (item is Book)
+            {
+                item.print();
+            }
+        }
+
+    }
+
+    public class Magazine : Printable
+{
+    private string title;
+
+    public Magazine(string title)
+    {
+        this.title = title;
+    }
+    public void print()
+    {
+        Console.WriteLine(title);
+    }
+    public static void printMagazines(Printable[] printable)
+    {
+        foreach (Printable item in printable)
+        {
+            if (item is Magazine)
+            {
+                item.print();
+            }
+        }
+    }
+}
+
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            Printable[] arr = new Printable[6];
+            arr[0] = new Book("Book 1");
+            arr[1] = new Book("Book 2");
+            arr[2] = new Book("Book 3");
+            arr[3] = new Magazine("Magazine 1");
+            arr[4] = new Magazine("Magazine 2");
+            arr[5] = new Magazine("Magazine 3");
+
+            foreach (Printable item in arr)
+            {
+                item.print();
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Magazines:");
+            Magazine.printMagazines(arr);
+            
+            Console.WriteLine();
+            Console.WriteLine("Books:");
+            Book.printBooks(arr);
+        }
+    }
+}
