@@ -1,0 +1,138 @@
+class Shop
+{
+    private string[] sizes = { "XXS", "XS", "S", "M", "L" };
+    private int euroSize;
+    Shop(int euroSizes)
+    {
+        this.euroSize = euroSizes;
+    }
+    public string getDescription(string size)
+    {
+        if (size == "XXS")
+            return "Дитячий розмір";
+        else
+            return "Дорослий розмір";
+    }
+}
+
+interface МaleClothing
+{
+    void dressMan();
+}
+
+interface FemaleClothing
+{
+    void dressWoman();
+}
+
+abstract class Clothing
+{
+    protected string size;
+    protected double price;
+    protected string color;
+
+    public Clothing(string size, double price, string color)
+    {
+        this.size = size;
+        this.price = price;
+        this.color = color;
+    }
+}
+
+class TShirt : Clothing, МaleClothing, FemaleClothing
+{
+    public TShirt(string size, double price, string color) : base(size, price, color) { }
+
+    public void dressMan()
+    {
+        Console.WriteLine($"Футболка розмір {size}, ціна {price}, колір {color}");
+    }
+
+    public void dressWoman()
+    {
+        Console.WriteLine($"Футболка розмір {size}, ціна {price}, колір {color}");
+    }
+}
+
+class Pants : Clothing, МaleClothing, FemaleClothing
+{
+    public Pants(string size, double price, string color) : base(size, price, color) { }
+
+    public void dressMan()
+    {
+        Console.WriteLine($"Штани розмір {size}, ціна {price}, колір {color}");
+    }
+
+    public void dressWoman()
+    {
+        Console.WriteLine($"Штани розмір {size}, ціна {price}, колір {color}");
+    }
+}
+
+class Skirt : Clothing, FemaleClothing
+{
+    public Skirt(string size, double price, string color) : base(size, price, color) { }
+
+    public void dressWoman()
+    {
+        Console.WriteLine($"Спідниця розмір {size}, ціна {price}, колір {color}");
+    }
+}
+
+class Tie : Clothing, МaleClothing
+{
+    public Tie(string size, double price, string color) : base(size, price, color) { }
+
+    public void dressMan()
+    {
+        Console.WriteLine($"Краватка розмір {size}, ціна {price}, колір {color}");
+    }
+}
+
+class TailorShop
+{
+    public void DressWoman(Clothing[] clothes)
+    {
+        Console.WriteLine("Одягаємо жінку:");
+        foreach (var item in clothes)
+        {
+            if (item is FemaleClothing)
+            {
+                FemaleClothing femaleClothing = (FemaleClothing)item;
+                femaleClothing.dressWoman();
+            }
+        }
+    }
+
+    public void DressMan(Clothing[] clothes)
+    {
+        Console.WriteLine("Одягаємо чоловіка:");
+        foreach (var item in clothes)
+        {
+            if (item is МaleClothing)
+            {
+                МaleClothing maleClothing = (МaleClothing)item;
+                maleClothing.dressMan();
+            }
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        TailorShop tailorShop = new TailorShop();
+        Clothing[] clothes = new Clothing[]
+        {
+            new TShirt("M", 259, "Чорний"),
+            new Pants("L", 390, "Сірий"),
+            new Skirt("S", 290, "Синій"),
+            new Tie("M", 100, "Червоний")
+        };
+
+        tailorShop.DressWoman(clothes);
+        Console.WriteLine();
+        tailorShop.DressMan(clothes);
+    }
+}
